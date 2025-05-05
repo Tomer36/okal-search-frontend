@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+
+# Build output
+build/
+
+# Configuration files
+.env
+*.env.local
+*.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+
+# Personal files
+*.bak
+*.tmp
+
+# Specific files or folders to ignore
+public/*.cache
+public/*.map
+
+# Ignore compiled/temporary files
+*.log
+*.out
+*.class
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Avoid package-lock.json if using yarn
+# (Uncomment below if not applicable)
+# package-lock.json

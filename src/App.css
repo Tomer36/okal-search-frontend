@@ -1,0 +1,236 @@
+/* General App Styling */
+.App {
+  text-align: center;
+  font-family: "Roboto", Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #f3f8fe, #e2edf5);
+  color: #333;
+}
+
+/* Taskbar Styling */
+.taskbar {
+  background: #0056b3;
+  color: white;
+  padding: 30px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.taskbar .info {
+  display: flex;
+  flex-direction: column;
+}
+
+.taskbar h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #ffdf6c;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.taskbar p {
+  margin: 5px 0 0;
+  font-size: 1.5rem;
+  background-color: #ffdf6c;
+  color: #0056b3;
+  border-radius: 50px;
+}
+
+/* Action Buttons */
+.taskbar .actions button {
+  background-color: #ffffff;
+  color: #0056b3;
+  border: none;
+  padding: 8px 15px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+
+.taskbar .actions button:hover {
+  background-color: #ffdf6c;
+  color: #004a99;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+/* Search Input */
+.search-container {
+  padding: 20px;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Loading & Error Messages */
+.loading-message,
+.error-message,
+.no-results {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  text-align: center;
+  color: #333;
+}
+
+.error-message {
+  color: #e74c3c;
+}
+
+/* Photo List Styling */
+.photo-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Photo Card */
+.photo-card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 140px;
+  padding: 12px;
+  text-align: center;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.photo-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Photo Icon */
+.photo-icon {
+  width: 45px;
+  height: 45px;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.photo-icon:hover {
+  transform: scale(1.2);
+}
+
+/* Photo Viewer Modal */
+.photo-viewer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  cursor: pointer;
+}
+
+.photo-viewer-content {
+  position: relative;
+}
+
+.large-photo {
+  max-width: 40%;
+  max-height: 40%;
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Edit & Delete Actions */
+.photo-actions {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.photo-actions .edit-button {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.photo-actions .edit-button:hover {
+  background-color: #00448d;
+  transform: scale(1.03);
+}
+
+.photo-actions .delete-photo-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.photo-actions .delete-photo-button:hover {
+  background-color: #d93636;
+  transform: scale(1.03);
+}
+
+/* Notification */
+.notification {
+  top: 10px;
+  right: 10px;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 16px;
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Footer */
+.footer {
+  background-color: #333;
+  color: white;
+  padding: 15px 0;
+  margin-top: auto;
+  text-align: center;
+  box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.footer p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: lighter;
+}
