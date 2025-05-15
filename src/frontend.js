@@ -8,7 +8,7 @@ const PhotoSearch = () => {
   // New states for the date range filter
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  
+
   const [query, setQuery] = useState("");
   const [minRange, setMinRange] = useState("");
   const [maxRange, setMaxRange] = useState("");
@@ -24,13 +24,17 @@ const PhotoSearch = () => {
     try {
       // Build the search URL with query parameters.
       let url = `${backendURL}/api/search?query=${encodeURIComponent(query)}`;
-      
+
       if (minRange !== "" && maxRange !== "") {
-        url += `&min=${encodeURIComponent(minRange)}&max=${encodeURIComponent(maxRange)}`;
+        url += `&min=${encodeURIComponent(minRange)}&max=${encodeURIComponent(
+          maxRange
+        )}`;
       }
-      
+
       if (startDate !== "" && endDate !== "") {
-        url += `&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
+        url += `&startDate=${encodeURIComponent(
+          startDate
+        )}&endDate=${encodeURIComponent(endDate)}`;
       }
 
       const response = await fetch(url);
@@ -70,28 +74,36 @@ const PhotoSearch = () => {
       console.error("No photo selected for printing!");
       return;
     }
-
-    // Open a new window for printing
+    // Open a new window for printing the single selected image.
     const printWindow = window.open("", "_blank");
-
-    // Write a complete HTML document with styling
     printWindow.document.write(`
       <html>
         <head>
-          <title>Print Image</title>
-          <style>
+          <title>Okal</title>
+           <style>
+            @media print {
+              .print-photo-card {
+                page-break-after: always;
+                page-break-inside: avoid;
+              }
+              .print-photo-card:last-child {
+                page-break-after: auto;
+              }
+            }
             body {
               font-family: Arial, sans-serif;
               text-align: center;
               background-color: white;
               padding: 20px;
+              margin: 0;
             }
             .print-container {
               display: flex;
               flex-direction: column;
               align-items: center;
-              justify-content: center;
-              height: 100vh;
+            }
+            .print-photo-card {
+              margin-bottom: 20px;
             }
             img {
               max-width: 90%;
@@ -108,18 +120,86 @@ const PhotoSearch = () => {
         </body>
       </html>
     `);
-
     printWindow.document.close();
-
-    // Use a media query to detect when print dialog is closed
     const mediaQueryList = printWindow.matchMedia("print");
-
     mediaQueryList.addEventListener("change", (e) => {
       if (!e.matches) {
         printWindow.close();
       }
     });
+    printWindow.print();
+  };
 
+  // New function: Print all photos, each on its own page.
+  const handlePrintAll = () => {
+    if (photos.length === 0) {
+      console.error("אין תעודות להדפסה!");
+      return;
+    }
+
+    const printWindow = window.open("", "_blank");
+
+    // Create HTML string for all photos. Each photo is wrapped in a container that enforces a page break.
+    const imagesHtml = photos
+      .map(
+        (photo) =>
+          `<div class="print-photo-card">
+             <img src="${backendURL}/${photo}" alt="${photo}" />
+           </div>`
+      )
+      .join("");
+
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Okal</title>
+          <style>
+            @media print {
+              .print-photo-card {
+                page-break-after: always;
+                page-break-inside: avoid;
+              }
+              .print-photo-card:last-child {
+                page-break-after: auto;
+              }
+            }
+            body {
+              font-family: Arial, sans-serif;
+              text-align: center;
+              background-color: white;
+              padding: 20px;
+              margin: 0;
+            }
+            .print-container {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+            }
+            .print-photo-card {
+              margin-bottom: 20px;
+            }
+            img {
+              max-width: 90%;
+              max-height: 90vh;
+              border-radius: 10px;
+              box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            }
+          </style>
+        </head>
+        <body>
+          <div class="print-container">
+            ${imagesHtml}
+          </div>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+    const mediaQueryList = printWindow.matchMedia("print");
+    mediaQueryList.addEventListener("change", (e) => {
+      if (!e.matches) {
+        printWindow.close();
+      }
+    });
     printWindow.print();
   };
 
@@ -137,7 +217,10 @@ const PhotoSearch = () => {
 
       {/* Search options card */}
       <div className="search-card">
-        <div className="search-container" style={{ direction: "rtl", textAlign: "right" }}>
+        <div
+          className="search-container"
+          style={{ direction: "rtl", textAlign: "right" }}
+        >
           <div>
             <label htmlFor="textSearch">חיפוש חופשי:</label>
             <input
@@ -200,7 +283,7 @@ const PhotoSearch = () => {
 
       {loading && <p className="loading-message">טוען...</p>}
       {error && <p className="error-message">{error}</p>}
-      
+
       {/* No results found message */}
       {!loading &&
         photos.length === 0 &&
@@ -208,7 +291,7 @@ const PhotoSearch = () => {
           (minRange !== "" && maxRange !== "") ||
           (startDate !== "" && endDate !== "")) && (
           <p className="no-results">לא נמצאו תוצאות</p>
-      )}
+        )}
 
       <div className="photo-list">
         {photos.map((photo, index) => (
@@ -223,14 +306,30 @@ const PhotoSearch = () => {
           </div>
         ))}
       </div>
+      {/* Print All Button */}
+      {photos.length > 0 && (
+        <div className="print-all-container">
+          <button className="print-all-button" onClick={handlePrintAll}>
+            🖨️ הדפס הכל
+          </button>
+        </div>
+      )}
 
       {selectedPhoto && (
         <div className="photo-viewer" onClick={() => setSelectedPhoto(null)}>
           <div className="photo-viewer-content">
-            <img src={selectedPhoto} alt="Full view" className="large-photo" />
-            <button className="print-button" onClick={handlePrintImage}>
-              🖨️ הדפס תמונה
-            </button>
+            <div className="photo-image-container">
+              <img
+                src={selectedPhoto}
+                alt="Full view"
+                className="large-photo"
+              />
+            </div>
+            <div className="button-container">
+              <button className="print-button" onClick={handlePrintImage}>
+                🖨️ הדפס
+              </button>
+            </div>
           </div>
         </div>
       )}

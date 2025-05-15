@@ -31,7 +31,7 @@
 .taskbar h1 {
   margin: 0;
   font-size: 1.5rem;
-  color: #ffdf6c;
+  color: #ffffff;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
 }
 
@@ -71,13 +71,17 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Field-wrapper: aligns labels with inputs */
-.search-container > div {
+.search-container>div {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;  /* Aligned to the right for RTL */
+  align-items: flex-start;
+  /* Aligned to the right for RTL */
   margin-bottom: 10px;
 }
 
@@ -97,7 +101,7 @@
 .date-input {
   padding: 12px;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  border: 1.5px solid #ccc;
   border-radius: 4px;
   transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
@@ -123,7 +127,7 @@
 .error-message,
 .no-results {
   margin-top: 10px;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   text-align: center;
   color: #333;
 }
@@ -148,7 +152,7 @@
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   width: 140px;
-  padding: 12px;
+  padding: 2px;
   text-align: center;
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
@@ -197,42 +201,46 @@
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-/* Edit & Delete Actions */
-.photo-actions {
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.photo-actions .edit-button {
+/* Updated Print Button Styling */
+.print-button {
   background-color: #0056b3;
+  /* A stylish purple */
   color: white;
   border: none;
-  border-radius: 6px;
-  padding: 8px 15px;
-  font-size: 0.9rem;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.photo-actions .edit-button:hover {
-  background-color: #00448d;
-  transform: scale(1.03);
+.print-button:hover {
+  background-color: #0067d5;
+  /* Darker purple on hover */
+  transform: scale(1.05);
 }
 
-.photo-actions .delete-photo-button {
-  background-color: #ff4d4d;
+/* Print All Button Container */
+.print-all-container {
+  margin: 20px auto;
+  text-align: center;
+}
+
+/* Print All Button Styling */
+.print-all-button {
+  background-color: #0056b3; /* Teal color */
   color: white;
   border: none;
-  border-radius: 6px;
-  padding: 8px 15px;
-  font-size: 0.9rem;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.photo-actions .delete-photo-button:hover {
-  background-color: #d93636;
-  transform: scale(1.03);
+.print-all-button:hover {
+  background-color: #0067d5; /* Darker teal on hover */
+  transform: scale(1.05);
 }
 
 /* Notification */
@@ -255,6 +263,7 @@
   0% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
