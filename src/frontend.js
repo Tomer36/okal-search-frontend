@@ -75,8 +75,10 @@ const PhotoSearch = () => {
       console.error("No photo selected for printing!");
       return;
     }
-    // Open a new window for printing the single selected image.
+
+    // Open a new window for printing the selected image
     const printWindow = window.open("", "_blank");
+
     printWindow.document.write(`
       <html>
         <head>
@@ -116,22 +118,32 @@ const PhotoSearch = () => {
         </head>
         <body>
           <div class="print-container">
-            <img src="${selectedPhoto}" alt="Print View" />
+            <img id="print-img" src="${selectedPhoto}" alt="Print View" />
           </div>
         </body>
       </html>
     `);
+
     printWindow.document.close();
+
+    // Ensure the image is fully loaded before printing
+    const img = printWindow.document.getElementById("print-img");
+    img.onload = () => {
+      printWindow.print();
+    };
+    img.onerror = () => {
+      console.error(`Failed to load image: ${selectedPhoto}`);
+    };
+
     const mediaQueryList = printWindow.matchMedia("print");
     mediaQueryList.addEventListener("change", (e) => {
       if (!e.matches) {
         printWindow.close();
       }
     });
-    printWindow.print();
   };
 
-  // New function: Print all photos, each on its own page.
+
   const handlePrintAll = () => {
     if (photos.length === 0) {
       console.error("אין תעודות להדפסה!");
@@ -140,12 +152,12 @@ const PhotoSearch = () => {
 
     const printWindow = window.open("", "_blank");
 
-    // Create HTML string for all photos. Each photo is wrapped in a container that enforces a page break.
+    // Build the HTML structure
     const imagesHtml = photos
       .map(
-        (photo) =>
+        (photo, index) =>
           `<div class="print-photo-card">
-             <img src="${backendURL}/${photo}" alt="${photo}" />
+             <img id="print-img-${index}" src="${backendURL}/${photo}" alt="${photo}" />
            </div>`
       )
       .join("");
@@ -194,15 +206,33 @@ const PhotoSearch = () => {
         </body>
       </html>
     `);
+
     printWindow.document.close();
+
+    // Ensure all images are fully loaded before printing
+    const images = printWindow.document.querySelectorAll("img");
+    let loadedCount = 0;
+
+    images.forEach((img) => {
+      img.onload = () => {
+        loadedCount++;
+        if (loadedCount === images.length) {
+          printWindow.print();
+        }
+      };
+      img.onerror = () => {
+        console.error(`Failed to load image: ${img.src}`);
+      };
+    });
+
     const mediaQueryList = printWindow.matchMedia("print");
     mediaQueryList.addEventListener("change", (e) => {
       if (!e.matches) {
         printWindow.close();
       }
     });
-    printWindow.print();
   };
+
 
   return (
     <div className="App">
