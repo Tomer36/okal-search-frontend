@@ -66,7 +66,7 @@
 
 /* Search Container */
 .search-container {
-  padding: 20px;
+  padding: 10px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -220,44 +220,60 @@
   transform: scale(1.05);
 }
 
-/* Print All Button Container */
-.print-all-container {
-  margin: 20px auto;
-  text-align: center;
+.result-bar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: #0056b3;
+  /* Deep blue background */
+  padding: 10px 8px;
+  font-size: 1.1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 }
 
-/* Print All Button Styling */
-.print-all-button {
-  background-color: #0056b3; /* Teal color */
-  color: white;
+.search-summary {
+  color: #fff;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+
+.result-actions {
+  display: inline-flex;
+  gap: 4px;
+}
+.result-actions .print-all-button {
+  background-color: #ffcc00; /* Bright gold to stand out */
   border: none;
-  padding: 12px 24px;
-  font-size: 1rem;
-  border-radius: 5px;
+  color: #0056b3; /* Dark text to contrast on gold */
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.print-all-button:hover {
-  background-color: #0067d5; /* Darker teal on hover */
-  transform: scale(1.05);
+.result-actions .print-all-button:hover {
+  background-color: #ffbf00; /* Slightly darker gold on hover */
+  transform: translateY(-2px);
 }
 
-/* Notification */
-.notification {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  background-color: #007bff;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  font-size: 16px;
-  z-index: 1000;
-  opacity: 1;
-  transition: opacity 0.5s ease-in-out;
+.result-actions .reset-button {
+  background-color: transparent; /* Keep it subtle */
+  border: 1px solid #fff; /* White border for contrast */
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
+
+.result-actions .reset-button:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Light white overlay on hover */
+  transform: translateY(-2px);
+}
+
 
 @keyframes fadeOut {
   0% {

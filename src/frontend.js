@@ -9,7 +9,6 @@ const PhotoSearch = () => {
   // New states for the date range filter
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-
   const [query, setQuery] = useState("");
   const [minRange, setMinRange] = useState("");
   const [maxRange, setMaxRange] = useState("");
@@ -17,7 +16,6 @@ const PhotoSearch = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedPhoto, setSelectedPhoto] = useState(null);
-  const [notification, setNotification] = useState("");
 
   const performSearch = useCallback(async () => {
     setLoading(true);
@@ -143,7 +141,6 @@ const PhotoSearch = () => {
     });
   };
 
-
   const handlePrintAll = () => {
     if (photos.length === 0) {
       console.error("אין תעודות להדפסה!");
@@ -232,7 +229,15 @@ const PhotoSearch = () => {
       }
     });
   };
-
+  const handleResetSearch = () => {
+    setQuery("");
+    setMinRange("");
+    setMaxRange("");
+    setStartDate("");
+    setEndDate("");
+    setPhotos([]);
+    setError("");
+  };
 
   return (
     <div className="App">
@@ -243,9 +248,6 @@ const PhotoSearch = () => {
           </div>
         </div>
       </div>
-
-      {notification && <div className="notification">{notification}</div>}
-
       {/* Search options card */}
       <div className="search-card">
         <div
@@ -265,7 +267,7 @@ const PhotoSearch = () => {
           </div>
 
           <div>
-            <label htmlFor="minRange">טווח אתחלה:</label>
+            <label htmlFor="minRange">טווח התחלה:</label>
             <input
               id="minRange"
               type="number"
@@ -311,9 +313,24 @@ const PhotoSearch = () => {
           </div>
         </div>
       </div>
+      <div className="result-bar">
+        <div className="search-summary">
+          נמצאו <strong>{photos.length}</strong> תוצאות
+        </div>
+        <div className="result-actions">
+          {photos.length > 0 && (
+            <button className="print-all-button" onClick={handlePrintAll}>
+              🖨️ הדפס הכל
+            </button>
+          )}
+          <button className="reset-button" onClick={handleResetSearch}>
+          איפוס חיפוש
+          </button>
+        </div>
+      </div>
 
-      {loading && <p className="loading-message">טוען...</p>}
-      {error && <p className="error-message">{error}</p>}
+      {loading && <span className="loading-message">⏳ טוען...</span>}
+      {error && <span className="error-message">❌ {error}</span>}
 
       {/* No results found message */}
       {!loading &&
@@ -323,7 +340,6 @@ const PhotoSearch = () => {
           (startDate !== "" && endDate !== "")) && (
           <p className="no-results">לא נמצאו תוצאות</p>
         )}
-
       <div className="photo-list">
         {photos.map((photo, index) => (
           <div key={index} className="photo-card">
@@ -337,15 +353,6 @@ const PhotoSearch = () => {
           </div>
         ))}
       </div>
-      {/* Print All Button */}
-      {photos.length > 0 && (
-        <div className="print-all-container">
-          <button className="print-all-button" onClick={handlePrintAll}>
-            🖨️ הדפס הכל
-          </button>
-        </div>
-      )}
-
       {selectedPhoto && (
         <div className="photo-viewer" onClick={() => setSelectedPhoto(null)}>
           <div className="photo-viewer-content">
