@@ -16,6 +16,7 @@ const PhotoSearch = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(null);
 
   const performSearch = useCallback(async () => {
     setLoading(true);
@@ -239,6 +240,24 @@ const PhotoSearch = () => {
     setError("");
   };
 
+  const handlePreviousPhoto = (e) => {
+    e.stopPropagation();
+    if (selectedPhotoIndex > 0) {
+      const newIndex = selectedPhotoIndex - 1;
+      setSelectedPhoto(`${backendURL}/${photos[newIndex]}`);
+      setSelectedPhotoIndex(newIndex);
+    }
+  };
+
+  const handleNextPhoto = (e) => {
+    e.stopPropagation();
+    if (selectedPhotoIndex < photos.length - 1) {
+      const newIndex = selectedPhotoIndex + 1;
+      setSelectedPhoto(`${backendURL}/${photos[newIndex]}`);
+      setSelectedPhotoIndex(newIndex);
+    }
+  };
+
   return (
     <div className="App">
       <div className="taskbar">
@@ -324,7 +343,7 @@ const PhotoSearch = () => {
             </button>
           )}
           <button className="reset-button" onClick={handleResetSearch}>
-          איפוס חיפוש
+            איפוס חיפוש
           </button>
         </div>
       </div>
@@ -342,20 +361,31 @@ const PhotoSearch = () => {
         )}
       <div className="photo-list">
         {photos.map((photo, index) => (
-          <div key={index} className="photo-card">
+          <div
+            key={index}
+            className="photo-card"
+            onClick={() => setSelectedPhoto(`${backendURL}/${photo}`)}
+          >
             <img
-              src={searchIcon}
+              src={`${backendURL}/${photo}`}
               alt="icon"
               className="photo-icon"
-              onClick={() => setSelectedPhoto(`${backendURL}/${photo}`)}
             />
-            <p className="photo-name">{photo}</p>
+            <p className="photo-name">{photo.replace(/\.[^/.]+$/, "")}</p>
           </div>
         ))}
       </div>
       {selectedPhoto && (
         <div className="photo-viewer" onClick={() => setSelectedPhoto(null)}>
           <div className="photo-viewer-content">
+            <button
+              className="nav-arrow left"
+              onClick={handlePreviousPhoto}
+              disabled={photos.length <= 1 || selectedPhotoIndex === 0}
+            >
+              ◀
+            </button>
+
             <div className="photo-image-container">
               <img
                 src={selectedPhoto}
@@ -363,6 +393,15 @@ const PhotoSearch = () => {
                 className="large-photo"
               />
             </div>
+            <button
+              className="nav-arrow right"
+              onClick={handleNextPhoto}
+              disabled={
+                photos.length <= 1 || selectedPhotoIndex === photos.length - 1
+              }
+            >
+              ▶
+            </button>
             <div className="button-container">
               <button className="print-button" onClick={handlePrintImage}>
                 🖨️ הדפס
