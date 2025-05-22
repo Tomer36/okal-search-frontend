@@ -151,10 +151,10 @@
   border: 1px solid #ddd;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  width: 140px;
   padding: 2px;
   text-align: center;
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 .photo-card:hover {
@@ -164,15 +164,9 @@
 
 /* Photo Icon */
 .photo-icon {
-  width: 45px;
-  height: 45px;
+  width: 200px;
+  height: 200px;
   margin: 0 auto;
-  cursor: pointer;
-  transition: transform 0.3s ease-in-out;
-}
-
-.photo-icon:hover {
-  transform: scale(1.2);
 }
 
 /* Photo Viewer Modal */
@@ -199,6 +193,33 @@
   max-height: 40%;
   border-radius: 10px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2.5rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  z-index: 3;
+  padding: 8px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-arrow.left {
+  left: 20px;
+}
+
+.nav-arrow.right {
+  right: 20px;
+}
+
+.nav-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
 }
 
 /* Updated Print Button Styling */
@@ -241,10 +262,13 @@
   display: inline-flex;
   gap: 4px;
 }
+
 .result-actions .print-all-button {
-  background-color: #ffcc00; /* Bright gold to stand out */
+  background-color: #ffcc00;
+  /* Bright gold to stand out */
   border: none;
-  color: #0056b3; /* Dark text to contrast on gold */
+  color: #0056b3;
+  /* Dark text to contrast on gold */
   padding: 4px 12px;
   border-radius: 6px;
   font-size: 1.1rem;
@@ -254,13 +278,16 @@
 }
 
 .result-actions .print-all-button:hover {
-  background-color: #ffbf00; /* Slightly darker gold on hover */
+  background-color: #ffbf00;
+  /* Slightly darker gold on hover */
   transform: translateY(-2px);
 }
 
 .result-actions .reset-button {
-  background-color: transparent; /* Keep it subtle */
-  border: 1px solid #fff; /* White border for contrast */
+  background-color: transparent;
+  /* Keep it subtle */
+  border: 1px solid #fff;
+  /* White border for contrast */
   color: #fff;
   padding: 4px 12px;
   border-radius: 6px;
@@ -270,7 +297,8 @@
 }
 
 .result-actions .reset-button:hover {
-  background-color: rgba(255, 255, 255, 0.2); /* Light white overlay on hover */
+  background-color: rgba(255, 255, 255, 0.2);
+  /* Light white overlay on hover */
   transform: translateY(-2px);
 }
 
