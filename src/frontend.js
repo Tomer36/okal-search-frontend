@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import "./App.css"; // Import the integrated styles
 import searchIcon from "../src/assests/search.png";
 
-// const backendURL = "http://localhost:7000";
-const backendURL = "http://192.168.2.88:7000";
+const backendURL = "http://localhost:7000";
+// const backendURL = "http://192.168.2.88:7000";
 
 const PhotoSearch = () => {
   // New states for the date range filter
